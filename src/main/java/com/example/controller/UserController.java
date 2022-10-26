@@ -1,6 +1,8 @@
 package com.example.controller;
 
 import com.example.model.User;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,10 +23,21 @@ public class UserController {
         return "Bye "+name;
     }
 
-    //inpost using request body
-    // use postman or any rest clint with url http://localhost:8080/register body { "name" :"Amit"}  method POST
+    //in post using request body
+    // use postman or any rest client with url http://localhost:8080/register body { "name" :"Amit"}  method POST
     @PostMapping("/register")
     public String registerUser(@RequestBody User user){
         return "User :"+user.getName()+" is registered .";
+    }
+
+    @GetMapping("/response-entity-builder-with-http-headers")
+    public ResponseEntity<String> usingResponseEntityBuilderAndHttpHeaders() {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Example-Header",
+                "Value-ResponseEntityBuilderWithHttpHeaders");
+
+        return ResponseEntity.ok()
+                .headers(responseHeaders)
+                .body("Response with header using ResponseEntity");
     }
 }
